@@ -8,8 +8,8 @@ const routes: Routes = [
     path: "",
     component: IndexComponent,
   },
-  ...getGameRoutes(),
- ];
+   ...getGameRoutes(),
+];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
