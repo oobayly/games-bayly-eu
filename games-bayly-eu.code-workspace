@@ -1,0 +1,27 @@
+{
+  "folders": [
+    {
+      "name": "firebase",
+      "path": "firebase"
+    },
+    {
+      "name": "website",
+      "path": "website"
+    },
+    {
+      "path": "assets"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true
+    },
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "html.format.endWithNewline": true,
+    "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
+    "typescript.preferences.quoteStyle": "double",
+  }
+}
