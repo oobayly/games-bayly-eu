@@ -1,1 +1,5 @@
 <p>index works!</p>
+
+<div *ngFor="let item of games">
+<a [routerLink]="item.route">{{item.name}}</a>
+</div>  
