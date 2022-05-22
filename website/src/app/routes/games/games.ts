@@ -15,13 +15,13 @@ export const Games: Game[] = [
   {
     name: "Rummikub",
     route: "rummikub",
-  }
+  },
 ]
 
 /** Get all the routes for the available games. */
 export function getGameRoutes(): Route[] {
   return Games.map((game) => {
-    const { name, route } = game;
+    const { route } = game;
 
     return {
       path: game.route,
