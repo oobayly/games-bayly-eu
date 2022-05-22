@@ -1,9 +1,13 @@
+import { Type } from "@angular/core";
 import { Route } from "@angular/router";
+import { MolkkyModule } from "./molkky/molkky.module";
+import { RummikubModule } from "./rummikub/rummikub.module";
 
 export interface Game {
   name: string;
   route: string;
   image?: string;
+  type: Type<any>;
 }
 
 /** A list of all the games */
@@ -11,10 +15,12 @@ export const Games: Game[] = [
   {
     name: "Molkky",
     route: "molkky",
+    type: MolkkyModule,
   },
   {
     name: "Rummikub",
     route: "rummikub",
+    type: RummikubModule,
   },
 ]
 
