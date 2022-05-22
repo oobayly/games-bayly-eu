@@ -2,10 +2,13 @@ import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
 import { RummikubRoutingModule } from "./rummikub-routing.module";
+import { RummikubComponent } from "./rummikub.component";
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    RummikubComponent,
+  ],
   imports: [
     CommonModule,
     RummikubRoutingModule,

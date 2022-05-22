@@ -1,0 +1,16 @@
+<div class="full-height">
+
+  <button type="button" class="" (click)="onResetClick()">Reset</button><br>
+  <button type="button" class="" (click)="onPauseClick()">Pause</button><br>
+
+  <div>{{intervalId}}</div>
+
+
+  <div>
+    {{remaining$ | async}}
+  </div>
+  <div>
+    {{remainingInt$ | async}}
+  </div>
+
+</div>
