@@ -1,8 +1,8 @@
-import { Component } from "@angular/core";
+import { Component, OnDestroy } from "@angular/core";
 import { Title } from "@angular/platform-browser";
-import { ActivatedRoute, Data, NavigationEnd, Router } from "@angular/router";
-import { filter, map, Observable, shareReplay, tap } from "rxjs";
-import { Game } from "./routes/games/games";
+import { ActivatedRoute, Data, NavigationEnd, NavigationStart, Router } from "@angular/router";
+import { filter, map, Observable, shareReplay, Subscription, tap } from "rxjs";
+import { Game, Games } from "./routes/games/games";
 
 const AppTitle = "Games";
 
@@ -11,14 +11,26 @@ const AppTitle = "Games";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
-export class AppComponent {
+export class AppComponent implements OnDestroy {
+  // ========================
+  // Observables
+  // ========================
+
+  private readonly routeData$ = this.getRouteData(); // Needs to be first
+
+  public readonly gameImage$ = this.getGameImage();
+
+  public readonly pageTitle$ = this.getPageTitle();
+
   // ========================
   // Properties
   // ========================
 
-  private readonly routeData$ = this.getRouteData();
+  public collapseMenu = true;
 
-  public readonly pageTitle$ = this.getPageTitle();
+  public readonly games = Games;
+
+  private subscriptions: Subscription[] = [];
 
   // ========================
   // Lifecycle
@@ -29,11 +41,37 @@ export class AppComponent {
     private router: Router,
     private titleService: Title,
   ) {
+    this.subscriptions.push(this.getNavStartSubscription());
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.forEach((s) => s.unsubscribe());
   }
 
   // ========================
   // Methods
   // ========================
+
+  private getGameImage(): Observable<string | undefined> {
+    return this.routeData$.pipe(
+      map((data) => {
+        if ("game" in data) {
+          return (data["game"] as Game).image;
+        }
+
+        return undefined;
+      }),
+    );
+  }
+
+  private getNavStartSubscription(): Subscription {
+    return this.router.events.pipe(
+      filter((e) => e instanceof NavigationStart),
+      tap(() => {
+        this.collapseMenu = true;
+      }),
+    ).subscribe();
+  }
 
   private getPageTitle(): Observable<string> {
     return this.routeData$.pipe(

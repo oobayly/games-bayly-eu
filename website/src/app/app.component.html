@@ -1,9 +1,45 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" routerLink="/">{{pageTitle$ | async}}</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-md navbar-light bg-light px-2">
+  <span class="navbar-brand">
+    <i class="bi bi-dice-6"></i>
+    {{pageTitle$ | async}}
+  </span>
+
+  <button class="navbar-toggler" type="button" aria-controls="navbarSupportedContent" aria-expanded="false"
+    aria-label="Toggle navigation" (click)="collapseMenu = !collapseMenu">
     <span class="navbar-toggler-icon"></span>
   </button>
+
+  <div class="navbar-collapse" [ngClass]="{'collapse': collapseMenu}">
+    <ul class="navbar-nav me-auto">
+      <!-- Games link for small devices -->
+      <li class="nav-item d-md-none">
+        <a routerLink="/games" routerLinkActive="active" class="nav-link">
+          <i class="bi bi-list me-1"></i>
+          All Games
+        </a>
+      </li>
+
+      <!-- Games dropdown for large devices -->
+      <li class="nav-item dropdown d-none d-md-inline-block" ngbDropdown>
+        <span class="nav-link" role="button" ngbDropdownToggle>
+          <i class="bi bi-list me-1"></i>
+          All Games
+        </span>
+        <div ngbDropdownMenu>
+          <a [routerLink]="['/games', item.route]" class="dropdown-item" *ngFor="let item of games">
+            {{item.name}}
+          </a>
+        </div>
+      </li>
+
+      <li class="nav-item">
+        <a routerLink="/privacy" routerLinkActive="active" class="nav-link">
+          <i class="bi bi-shield me-1"></i>
+          Privacy
+        </a>
+      </li>
+    </ul>
+  </div>
 </nav>
 
 <router-outlet></router-outlet>
