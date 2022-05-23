@@ -1,6 +1,6 @@
 import { Component, OnDestroy } from "@angular/core";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BehaviorSubject, distinctUntilChanged, map, Observable } from "rxjs";
+import { ModalService } from "src/app/core/services/modal.service";
 import { SpeechService } from "src/app/core/services/speech.service";
 import { GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.component";
 import { GameComponent } from "../games";
@@ -68,7 +68,7 @@ export class RummikubComponent implements GameComponent<RummikubSettings>, OnDes
   // ========================
 
   constructor(
-    private modal: NgbModal,
+    private modal: ModalService,
     private speech: SpeechService,
   ) {
     this.remaining$ = new BehaviorSubject<number>(this.settings.countdown);
@@ -163,20 +163,18 @@ export class RummikubComponent implements GameComponent<RummikubSettings>, OnDes
   }
 
   private async showSettingsModal(): Promise<boolean> {
-    const ref = this.modal.open(SettingsModalComponent, { size: "lg", centered: true });
-    const component = ref.componentInstance as SettingsModalComponent;
+    const resp = await this.modal.showModal<SettingsModalComponent, RummikubSettings>({
+      type: SettingsModalComponent,
+      callback: (instance) => {
+        instance.value = this.settings;
+      },
+    });
 
-    component.settings = this.settings;
-
-    try {
-      await ref.result;
-
-      Object.assign(this.settings, component.settings);
-
-      return true;
-    } catch {
-      return false;
+    if (resp) {
+      Object.assign(this.settings, resp);
     }
+
+    return !!resp;
   }
 
   // ========================

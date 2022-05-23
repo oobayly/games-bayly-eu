@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { BaseModal } from "src/app/core/services/modal.service";
 import { RummikubSettings } from "../rummikub.component";
 
 @Component({
@@ -8,17 +9,15 @@ import { RummikubSettings } from "../rummikub.component";
   templateUrl: "./settings-modal.component.html",
   styleUrls: ["./settings-modal.component.scss"],
 })
-export class SettingsModalComponent {
+export class SettingsModalComponent implements BaseModal<RummikubSettings> {
   public readonly form = this.buildForm();
 
-  public get isValid(): boolean { return this.form.valid };
-
-  public set settings(value: RummikubSettings) {
+  public set value(value: RummikubSettings) {
     this.form.patchValue(value);
   }
 
-  public get settings(): RummikubSettings {
-    if (!this.isValid) {
+  public get value(): RummikubSettings {
+    if (this.form.invalid) {
       throw new Error("Settings cannot be retrieved.");
     }
 

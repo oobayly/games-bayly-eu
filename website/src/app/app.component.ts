@@ -1,6 +1,7 @@
 import { Component, OnDestroy } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Data, NavigationEnd, NavigationStart, Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { filter, map, Observable, shareReplay, Subscription, tap } from "rxjs";
 import { Game, Games } from "./routes/games/games";
 
@@ -38,6 +39,7 @@ export class AppComponent implements OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private ngbModal: NgbModal,
     private router: Router,
     private titleService: Title,
   ) {
@@ -69,6 +71,7 @@ export class AppComponent implements OnDestroy {
       filter((e) => e instanceof NavigationStart),
       tap(() => {
         this.collapseMenu = true;
+        this.ngbModal.dismissAll();
       }),
     ).subscribe();
   }

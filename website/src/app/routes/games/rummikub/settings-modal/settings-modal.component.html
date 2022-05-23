@@ -31,7 +31,7 @@
   <button type="button" class="btn btn-outline-danger" (click)="activeModal.dismiss()">
     Cancel
   </button>
-  <button type="button" class="btn btn-success" (click)="activeModal.close()" [disabled]="this.form.invalid">
+  <button type="button" class="btn btn-success" (click)="activeModal.close(value)" [disabled]="this.form.invalid">
     Save Settings
   </button>
 </div>
