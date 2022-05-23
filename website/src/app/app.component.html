@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-md navbar-light bg-light px-2">
+<nav class="navbar navbar-expand-md navbar-light bg-light px-2 fixed-top">
   <span class="navbar-brand">
     <i class="bi bi-dice-6"></i>
     {{pageTitle$ | async}}
@@ -42,4 +42,6 @@
   </div>
 </nav>
 
-<router-outlet></router-outlet>
+<div class="app-content">
+  <router-outlet></router-outlet>
+</div>
