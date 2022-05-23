@@ -1,0 +1,33 @@
+.game-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  .navbar {
+    .navbar-nav {
+      flex-direction: row;
+    }
+  }
+
+  @media (max-width: 767.98px) {
+    .label {
+      display: none;
+    }
+  }
+
+  @media (orientation: landscape) and (max-height: 767.98px) {
+    top: 0;
+    left: initial;
+    margin-top: 56px;
+    padding: 0 0.5rem;
+
+    .navbar-nav {
+      flex-direction: column;
+
+      .label {
+        display: none;
+      }
+    }
+  }
+}

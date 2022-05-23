@@ -1,5 +1,6 @@
 import { Type } from "@angular/core";
 import { Route } from "@angular/router";
+import { GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.component";
 import { MolkkyModule } from "./molkky/molkky.module";
 import { RummikubModule } from "./rummikub/rummikub.module";
 
@@ -8,6 +9,11 @@ export interface Game {
   route: string;
   image?: string;
   type: Type<any>;
+}
+
+export interface GameComponent {
+  readonly footerItems: GameFooterItem[];
+  onFooterItemClick: (item: GameFooterItem) => void | Promise<void>;
 }
 
 /** A list of all the games */

@@ -1,0 +1,10 @@
+<nav class="game-footer navbar navbar-expand navbar-light bg-light">
+  <ul class="navbar-nav mx-auto">
+    <li class="nav-item" *ngFor="let item of items">
+      <a [routerLink]="item.route" class="nav-link" role="button" (click)="onItemClick(item)">
+        <i class="bi" [ngClass]="icon" *ngIf="item.icon as icon"></i>
+        <span class="label ps-2">{{item.name}}</span>
+      </a>
+    </li>
+  </ul>
+</nav>
