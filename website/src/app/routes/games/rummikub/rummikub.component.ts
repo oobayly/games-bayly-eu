@@ -5,10 +5,19 @@ import { GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.c
 import { GameComponent } from "../games";
 
 /** The number of seconds for a countdown. */
-const Countdown = 30;
+const Countdown = 60;
+
+const SarcasmTime = 15;
+
+const SarcasticComments = [
+  "We're waiting",
+  "Tick Tock",
+  "Yawn",
+  "I'm bored",
+];
 
 /** The times that should be read out. */
-const ReadTimes = [30, 10, 5, 3, 2, 1];
+const ReadTimes = [30, SarcasmTime, 10, 5, 3, 2, 1];
 
 /** The number of milliseconds between timer ticks. */
 const TimerInterval = 50;
@@ -22,6 +31,10 @@ export class RummikubComponent implements GameComponent, OnDestroy {
   // ========================
   // Properties
   // ========================
+
+  private enableSpeech = true;
+
+  private enableSarcasm = true;
 
   /** The absolute time at which the countdown finishes. */
   private finishAt?: number;
@@ -94,6 +107,10 @@ export class RummikubComponent implements GameComponent, OnDestroy {
   }
 
   private readTime(time: number): void {
+    if (!this.enableSpeech) {
+      return;
+    }
+
     const nextTime = ReadTimes[this.nextReadTimeIndex];
 
     // Read 0.25 seconds early
@@ -104,6 +121,17 @@ export class RummikubComponent implements GameComponent, OnDestroy {
     }
 
     this.nextReadTimeIndex++;
+
+    if (nextTime === SarcasmTime) {
+      // Only use sarcasm 10% of the time
+      if (this.enableSarcasm && Math.floor(Math.random() * 10) === 0) {
+        const comment = SarcasticComments[Math.floor(Math.random() * SarcasticComments.length)];
+
+        void this.speech.speak(comment);
+      }
+
+      return;
+    }
 
     void this.speech.speak(`${Math.round(time)}`);
   }
