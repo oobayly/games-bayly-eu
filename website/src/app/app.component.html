@@ -26,6 +26,9 @@
           All Games
         </span>
         <div ngbDropdownMenu>
+          <a routerLink="/games" class="dropdown-item">
+            All Games
+          </a>
           <a [routerLink]="['/games', item.route]" class="dropdown-item" *ngFor="let item of games">
             {{item.name}}
           </a>
