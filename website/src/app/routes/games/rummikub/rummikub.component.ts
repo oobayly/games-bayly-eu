@@ -1,5 +1,7 @@
 import { Component, OnDestroy } from "@angular/core";
-import { BehaviorSubject, distinctUntilChanged, map } from "rxjs";
+import { BehaviorSubject, distinctUntilChanged, map, Observable } from "rxjs";
+import { GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.component";
+import { GameComponent } from "../games";
 
 /** The number of seconds for a countdown. */
 const Countdown = 30;
@@ -15,13 +17,17 @@ const TimerInterval = 50;
   templateUrl: "./rummikub.component.html",
   styleUrls: ["./rummikub.component.scss"],
 })
-export class RummikubComponent implements OnDestroy {
+export class RummikubComponent implements GameComponent, OnDestroy {
   // ========================
   // Properties
   // ========================
 
   /** The absolute time at which the countdown finishes. */
   private finishAt?: number;
+
+  public readonly footerItems: GameFooterItem[] = [
+    { name: "Settings", icon: "bi-gear" },
+  ];
 
   /** The ID of the current timer. */
   public intervalId?: number;
@@ -33,10 +39,12 @@ export class RummikubComponent implements OnDestroy {
   private pauseRemaining?: number;
 
   /** The amount of time remaining. */
-  public remaining$ = new BehaviorSubject<number>(0);
+  public remaining$ = new BehaviorSubject<number>(Countdown);
 
-  /** The time remaining as an integer. */
-  public remainingInt$ = this.remaining$.pipe(map((x) => Math.round(x)), distinctUntilChanged());
+  /** The path that describes the timer arc. */
+  public readonly svgPath$ = this.getSvgPath();
+
+  public readonly svgColor$ = this.getSvgColor();
 
   // ========================
   // Lifecycle
@@ -53,6 +61,34 @@ export class RummikubComponent implements OnDestroy {
   // ========================
   // Methods
   // ========================
+
+  private getSvgColor(): Observable<string> {
+    return this.remaining$.pipe(
+      map((value) => {
+        const green = Math.floor(256 * value / Countdown);
+        const red = 255 - green;
+
+        return `#${red.toString(16).padStart(2, "0")}${green.toString(16).padStart(2, "0")}00`;
+      }),
+      distinctUntilChanged(),
+    );
+  }
+
+  private getSvgPath(): Observable<string> {
+    return this.remaining$.pipe(
+      map((value) => {
+        return 360 - Math.round(360 * value / Countdown);
+      }),
+      distinctUntilChanged(),
+      map((angle) => {
+        // See https://developer.mozilla.org/en-US/docs/Web/SVG/Tutorial/Paths
+        const x = (50 * Math.sin(angle * Math.PI / 180)).toFixed(3);
+        const y = (-50 * Math.cos(angle * Math.PI / 180)).toFixed(3);
+        const largeArc = angle <= 180 ? 0 : 1;
+        return `M 0 -50 A 50 50 0 ${largeArc} 1 ${x} ${y} L 0 0 Z`;
+      }),
+    );
+  }
 
   private readTime(time: number): Promise<void> {
     return new Promise<void>((res) => {
@@ -73,6 +109,9 @@ export class RummikubComponent implements OnDestroy {
   // ========================
   // Event handlers
   // ========================
+
+  public onFooterItemClick(_item: GameFooterItem): void | Promise<void> {
+  };
 
   public onPauseClick(): void {
     if (this.intervalId) {
