@@ -1,11 +1,10 @@
 import { Component, OnDestroy } from "@angular/core";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { BehaviorSubject, distinctUntilChanged, map, Observable } from "rxjs";
 import { SpeechService } from "src/app/core/services/speech.service";
 import { GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.component";
 import { GameComponent } from "../games";
-
-/** The number of seconds for a countdown. */
-const Countdown = 60;
+import { SettingsModalComponent } from "./settings-modal/settings-modal.component";
 
 const SarcasmTime = 15;
 
@@ -22,19 +21,21 @@ const ReadTimes: number[] = [30, SarcasmTime, 10, 5, 3, 2, 1];
 /** The number of milliseconds between timer ticks. */
 const TimerInterval = 50;
 
+export interface RummikubSettings {
+  speech: boolean;
+  sarcasm: boolean;
+  countdown: number;
+}
+
 @Component({
   selector: "app-rummikub",
   templateUrl: "./rummikub.component.html",
   styleUrls: ["./rummikub.component.scss"],
 })
-export class RummikubComponent implements GameComponent, OnDestroy {
+export class RummikubComponent implements GameComponent<RummikubSettings>, OnDestroy {
   // ========================
   // Properties
   // ========================
-
-  private enableSpeech = true;
-
-  private enableSarcasm = true;
 
   /** The absolute time at which the countdown finishes. */
   private finishAt?: number;
@@ -53,20 +54,27 @@ export class RummikubComponent implements GameComponent, OnDestroy {
   private pauseRemaining?: number;
 
   /** The amount of time remaining. */
-  public remaining$ = new BehaviorSubject<number>(Countdown);
+  public remaining$: BehaviorSubject<number>;
+
+  public settings: RummikubSettings = this.loadSettings();
 
   /** The path that describes the timer arc. */
-  public readonly svgPath$ = this.getSvgPath();
+  public readonly svgPath$: Observable<string>;
 
-  public readonly svgColor$ = this.getSvgColor();
+  public readonly svgColor$: Observable<string>;
 
   // ========================
   // Lifecycle
   // ========================
 
   constructor(
+    private modal: NgbModal,
     private speech: SpeechService,
-  ) { }
+  ) {
+    this.remaining$ = new BehaviorSubject<number>(this.settings.countdown);
+    this.svgColor$ = this.getSvgColor();
+    this.svgPath$ = this.getSvgPath();
+  }
 
   ngOnDestroy(): void {
     if (this.intervalId) {
@@ -81,7 +89,7 @@ export class RummikubComponent implements GameComponent, OnDestroy {
   private getSvgColor(): Observable<string> {
     return this.remaining$.pipe(
       map((value) => {
-        const green = Math.floor(256 * value / Countdown);
+        const green = Math.floor(256 * value / this.settings.countdown);
         const red = 255 - green;
 
         return `#${red.toString(16).padStart(2, "0")}${green.toString(16).padStart(2, "0")}00`;
@@ -93,7 +101,7 @@ export class RummikubComponent implements GameComponent, OnDestroy {
   private getSvgPath(): Observable<string> {
     return this.remaining$.pipe(
       map((value) => {
-        return 360 - Math.round(360 * value / Countdown);
+        return 360 - Math.round(360 * value / this.settings.countdown);
       }),
       distinctUntilChanged(),
       map((angle) => {
@@ -106,8 +114,18 @@ export class RummikubComponent implements GameComponent, OnDestroy {
     );
   }
 
+  private loadSettings(): RummikubSettings {
+    return {
+      countdown: 60,
+      speech: true,
+      sarcasm: false,
+    };
+  }
+
   private readTime(time: number): void {
-    if (!this.enableSpeech) {
+    const { speech, sarcasm } = this.settings;
+
+    if (!speech) {
       return;
     }
 
@@ -124,7 +142,7 @@ export class RummikubComponent implements GameComponent, OnDestroy {
 
     if (nextTime === SarcasmTime) {
       // Only use sarcasm 10% of the time
-      if (this.enableSarcasm && Math.floor(Math.random() * 10) === 0) {
+      if (sarcasm && Math.floor(Math.random() * 10) === 0) {
         const comment = SarcasticComments[Math.floor(Math.random() * SarcasticComments.length)];
 
         void this.speech.speak(comment);
@@ -137,16 +155,38 @@ export class RummikubComponent implements GameComponent, OnDestroy {
   }
 
   private resetTimer() {
-    this.finishAt = Date.now() + (Countdown * 1000);
-    this.nextReadTimeIndex = ReadTimes.findIndex((x) => x < Countdown);
+    const { countdown } = this.settings;
+
+    this.finishAt = Date.now() + (countdown * 1000);
+    this.nextReadTimeIndex = ReadTimes.findIndex((x) => x < countdown);
     this.pauseRemaining = undefined;
+  }
+
+  private async showSettingsModal(): Promise<boolean> {
+    const ref = this.modal.open(SettingsModalComponent, { size: "lg", centered: true });
+    const component = ref.componentInstance as SettingsModalComponent;
+
+    component.settings = this.settings;
+
+    try {
+      await ref.result;
+
+      Object.assign(this.settings, component.settings);
+
+      return true;
+    } catch {
+      return false;
+    }
   }
 
   // ========================
   // Event handlers
   // ========================
 
-  public onFooterItemClick(_item: GameFooterItem): void | Promise<void> {
+  public async onFooterItemClick(item: GameFooterItem): Promise<void> {
+    if (item.name === "Settings") {
+      void this.showSettingsModal();
+    }
   };
 
   public onPauseClick(): void {

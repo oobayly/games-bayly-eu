@@ -1,0 +1,37 @@
+<div class="modal-header">
+  <h4 class="modal-title">Rummikub settings</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="form">
+    <!-- Countdown -->
+    <div class="form-group">
+      <label for="countdown">Countdown</label>
+      <input type="number" class="form-control" id="countdown" formControlName="countdown" min="10" max="600" required
+        placeholder="Countdown" aria-describedby="emailHelp">
+      <small id="countdownHelp" class="form-text text-muted">The number of seconds allowed for a play.</small>
+    </div>
+
+    <!-- Speech toggle -->
+    <div class="form-check form-switch">
+      <input type="checkbox" class="form-check-input" id="speech" formControlName="speech">
+      <label class="form-check-label" for="speech">Enable voice time prompts</label>
+    </div>
+
+    <!-- Sarcasm toggle -->
+    <div class="form-check form-switch">
+      <input type="checkbox" class="form-check-input" id="sarcasm" formControlName="sarcasm">
+      <label class="form-check-label" for="sarcasm">Enable sarcastic comments</label>
+    </div>
+  </form>
+</div>
+
+<div class="modal-footer">
+  <button type="button" class="btn btn-outline-danger" (click)="activeModal.dismiss()">
+    Cancel
+  </button>
+  <button type="button" class="btn btn-success" (click)="activeModal.close()" [disabled]="this.form.invalid">
+    Save Settings
+  </button>
+</div>
