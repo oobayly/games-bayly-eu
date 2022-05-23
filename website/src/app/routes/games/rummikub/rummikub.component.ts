@@ -1,5 +1,6 @@
 import { Component, OnDestroy } from "@angular/core";
 import { BehaviorSubject, distinctUntilChanged, map, Observable } from "rxjs";
+import { SpeechService } from "src/app/core/services/speech.service";
 import { GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.component";
 import { GameComponent } from "../games";
 
@@ -50,7 +51,9 @@ export class RummikubComponent implements GameComponent, OnDestroy {
   // Lifecycle
   // ========================
 
-  constructor() { }
+  constructor(
+    private speech: SpeechService,
+  ) { }
 
   ngOnDestroy(): void {
     if (this.intervalId) {
@@ -90,14 +93,19 @@ export class RummikubComponent implements GameComponent, OnDestroy {
     );
   }
 
-  private readTime(time: number): Promise<void> {
-    return new Promise<void>((res) => {
-      const utterance = new SpeechSynthesisUtterance(`${Math.round(time)}`);
+  private readTime(time: number): void {
+    const nextTime = ReadTimes[this.nextReadTimeIndex];
 
-      window.speechSynthesis.speak(utterance);
+    // Read 0.25 seconds early
+    time -= .25;
 
-      res();
-    });
+    if (!nextTime || time > nextTime) {
+      return;
+    }
+
+    this.nextReadTimeIndex++;
+
+    void this.speech.speak(`${Math.round(time)}`);
   }
 
   private resetTimer() {
@@ -145,14 +153,8 @@ export class RummikubComponent implements GameComponent, OnDestroy {
     }
 
     const timeLeft = Math.max(0, (finishAt - new Date().getTime()) / 1000);
-    const nextTime = ReadTimes[this.nextReadTimeIndex];
 
-    if (nextTime && timeLeft <= nextTime) {
-      this.nextReadTimeIndex++;
-
-      void this.readTime(timeLeft);
-    }
-
+    this.readTime(timeLeft);
     this.remaining$.next(timeLeft);
 
     if (timeLeft <= 0) {
