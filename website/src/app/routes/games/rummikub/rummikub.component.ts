@@ -17,7 +17,7 @@ const SarcasticComments = [
 ];
 
 /** The times that should be read out. */
-const ReadTimes = [30, SarcasmTime, 10, 5, 3, 2, 1];
+const ReadTimes: number[] = [30, SarcasmTime, 10, 5, 3, 2, 1];
 
 /** The number of milliseconds between timer ticks. */
 const TimerInterval = 50;
@@ -138,7 +138,7 @@ export class RummikubComponent implements GameComponent, OnDestroy {
 
   private resetTimer() {
     this.finishAt = Date.now() + (Countdown * 1000);
-    this.nextReadTimeIndex = ReadTimes.findIndex((x) => x < Countdown) || -1;
+    this.nextReadTimeIndex = ReadTimes.findIndex((x) => x < Countdown);
     this.pauseRemaining = undefined;
   }
 
