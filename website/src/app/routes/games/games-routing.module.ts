@@ -7,6 +7,9 @@ const routes: Routes = [
   {
     path: "",
     component: IndexComponent,
+    data: {
+      title: "All Games",
+    },
   },
    ...getGameRoutes(),
 ];
