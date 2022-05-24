@@ -1,0 +1,5 @@
+{
+  "scripts": {
+    "emulate": "firebase emulators:start"
+  }
+}
