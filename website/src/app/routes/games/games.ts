@@ -20,7 +20,7 @@ export interface GameComponent<TSettings> {
 /** A list of all the games */
 export const Games: Game[] = [
   {
-    name: "Molkky",
+    name: "Mölkky",
     route: "molkky",
     type: MolkkyModule,
   },
