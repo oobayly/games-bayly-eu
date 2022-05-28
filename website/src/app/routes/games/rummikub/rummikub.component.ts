@@ -8,12 +8,18 @@ import { SettingsModalComponent } from "./settings-modal/settings-modal.componen
 
 const SarcasmTime = 15;
 
-const SarcasticComments = [
-  "We're waiting",
-  "Tick Tock",
-  "Yawn",
-  "I'm bored",
+const SarcasticComments: Comment[] = [
+  { text: "We're waiting" },
+  { text: "Tick Tock" },
+  { text: "Yawn", rate: .4, pitch: .5},
+  { text: "I'm bored" },
 ];
+
+interface Comment {
+  text: string;
+  rate?: number;
+  pitch?: number;
+}
 
 /** The times that should be read out. */
 const ReadTimes: number[] = [30, SarcasmTime, 10, 5, 3, 2, 1];
@@ -144,8 +150,16 @@ export class RummikubComponent implements GameComponent<RummikubSettings>, OnDes
       // Only use sarcasm 10% of the time
       if (sarcasm && Math.floor(Math.random() * 10) === 0) {
         const comment = SarcasticComments[Math.floor(Math.random() * SarcasticComments.length)];
+        const u = new SpeechSynthesisUtterance(comment.text);
 
-        void this.speech.speak(comment);
+        if (comment.pitch) {
+          u.pitch = comment.pitch;
+        }
+        if (comment.rate) {
+          u.rate = comment.rate;
+        }
+
+        void this.speech.speak(u);
       }
 
       return;
