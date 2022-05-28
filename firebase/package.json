@@ -1,5 +1,6 @@
 {
   "scripts": {
-    "emulate": "firebase emulators:start"
+    "emulate": "firebase emulators:start",
+    "deploy:hosting": "firebase deploy --only hosting"
   }
 }
