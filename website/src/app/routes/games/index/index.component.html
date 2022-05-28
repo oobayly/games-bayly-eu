@@ -1,5 +1,12 @@
-<p>index works!</p>
+<div class="container">
 
-<div *ngFor="let item of games">
-<a [routerLink]="item.route">{{item.name}}</a>
-</div>  
+  <div class="px-4 py-2 text-center">
+    <h1 class="display-5 fw-bold">Games</h1>
+  </div>
+
+  <ul class="list-group">
+    <a [routerLink]="item.route" class="list-group-item" *ngFor="let item of games$ | async">
+      {{item.name}}
+    </a>
+  </ul>
+</div>

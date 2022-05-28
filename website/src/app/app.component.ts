@@ -2,7 +2,7 @@ import { Component, OnDestroy } from "@angular/core";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Data, NavigationEnd, NavigationStart, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { filter, map, Observable, shareReplay, Subscription, tap } from "rxjs";
+import { filter, map, Observable, of, shareReplay, Subscription, tap } from "rxjs";
 import { Game, Games } from "./routes/games/games";
 
 const AppTitle = "Games";
@@ -29,7 +29,7 @@ export class AppComponent implements OnDestroy {
 
   public collapseMenu = true;
 
-  public readonly games = Games;
+  public readonly games$ = of(Games);
 
   private subscriptions: Subscription[] = [];
 

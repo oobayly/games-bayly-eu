@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { of } from "rxjs";
 import { Games } from "../games";
 
 @Component({
@@ -7,5 +8,5 @@ import { Games } from "../games";
   styleUrls: ["./index.component.scss"],
 })
 export class IndexComponent {
-  public readonly games = Games;
+  public readonly games$ = of(Games);
 }
