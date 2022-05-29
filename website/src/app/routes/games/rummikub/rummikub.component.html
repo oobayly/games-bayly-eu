@@ -4,7 +4,9 @@
     <div>
       <!-- Timer SVG -->
       <svg viewBox="-50 -50 100 100">
+        <circle r="50"></circle>>
         <path [attr.d]="svgPath$ | async" [attr.fill]="svgColor$ | async"/>
+        <circle r="30"></circle>>
       </svg>
 
       <button type="button" class="" (click)="onResetClick()">

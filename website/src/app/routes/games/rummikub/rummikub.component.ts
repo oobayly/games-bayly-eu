@@ -11,7 +11,7 @@ const SarcasmTime = 15;
 const SarcasticComments: Comment[] = [
   { text: "We're waiting" },
   { text: "Tick Tock" },
-  { text: "Yawn", rate: .4, pitch: .5},
+  { text: "Yawn", rate: .4, pitch: .5 },
   { text: "I'm bored" },
 ];
 
@@ -95,8 +95,17 @@ export class RummikubComponent implements GameComponent<RummikubSettings>, OnDes
   private getSvgColor(): Observable<string> {
     return this.remaining$.pipe(
       map((value) => {
-        const green = Math.floor(256 * value / this.settings.countdown);
-        const red = 255 - green;
+        const x = Math.floor(512 * value / this.settings.countdown);
+        let green: number;
+        let red: number;
+
+        if (x > 255) {
+          green = 0xff;
+          red = 511 - x;
+        } else {
+          green = x;
+          red = 0xff;
+        }
 
         return `#${red.toString(16).padStart(2, "0")}${green.toString(16).padStart(2, "0")}00`;
       }),

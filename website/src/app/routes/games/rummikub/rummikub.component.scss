@@ -16,12 +16,16 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        border: 1px solid;
+        padding: 0;
+        border: 5px solid var(--bs-gray);
         border-radius: 50%;
+        width: 100%;
+        height: 100%;
+        background-color: var(--bs-gray-100);
         font-size: xx-large;
       }
     }
-   
+
     &.reset-container {
       width: 75vw;
 
@@ -30,11 +34,14 @@
         z-index: -1;
         width: 100%;
         height: 100%;
+
+        circle {
+          fill: var(--bs-gray-100);
+        }
       }
 
       button {
-        width: calc(100% - 2rem);
-        height: calc(100% - 2rem);
+        background-color: transparent;
       }
 
       @media (orientation: landscape) {
@@ -45,13 +52,20 @@
     &.pause-container {
       width: 25vw;
 
-      button {
-        width: 100%;
-        height: 100%;
-      }
-
       @media (orientation: landscape) {
         width: 25vh;
+      }
+
+      button {
+        background-color: #00ff00;
+      }
+    }
+  }
+
+  &.is-active {
+    .pause-container {
+      button {
+        background-color: var(--bs-orange);
       }
     }
   }
