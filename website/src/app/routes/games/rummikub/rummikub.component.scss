@@ -42,6 +42,10 @@
 
       button {
         background-color: transparent;
+
+        .remaining:empty::before {
+          content: '\00a0';
+        }
       }
 
       @media (orientation: landscape) {
@@ -58,6 +62,10 @@
 
       button {
         background-color: #00ff00;
+
+        i:before {
+          content: "\F4f4";
+        }
       }
     }
   }
@@ -66,6 +74,10 @@
     .pause-container {
       button {
         background-color: var(--bs-orange);
+
+        i:before {
+          content: "\F4C3";
+        }
       }
     }
   }

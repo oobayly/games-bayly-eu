@@ -1,4 +1,4 @@
-<div class="game-container d-flex align-items-center justify-content-center" [ngClass]="{'is-active': intervalId}">
+<div class="game-container d-flex align-items-center justify-content-center" [ngClass]="{'is-active': enabled$ | async}">
 
   <div class="button-container reset-container m-2" appFixedAr="1">
     <div>
@@ -12,7 +12,7 @@
       <button type="button" class="" (click)="onResetClick()">
         <span>&nbsp;</span>
         <i class="bi bi-arrow-clockwise"></i>
-        <span>{{remaining$ | async | number:'1.1-1'}}</span>
+        <span class="remaining">{{remaining$ | async | number:'1.1-1'}}</span>
       </button>
     </div>
   </div>
@@ -20,7 +20,7 @@
   <div class="button-container pause-container m-2" appFixedAr="1">
     <div>
       <button type="button" class="" (click)="onPauseClick()">
-        <i class="bi" [ngClass]="{'bi-pause': intervalId, 'bi-play': !intervalId}"></i>
+        <i class="bi"></i>
       </button>
     </div>
   </div>

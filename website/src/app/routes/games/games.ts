@@ -11,9 +11,8 @@ export interface Game {
   type: Type<any>;
 }
 
-export interface GameComponent<TSettings> {
+export interface GameComponent {
   readonly footerItems: GameFooterItem[];
-  settings: TSettings;
   onFooterItemClick: (item: GameFooterItem) => void | Promise<void>;
 }
 

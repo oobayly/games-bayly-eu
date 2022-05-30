@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
+import { map, Observable, startWith } from "rxjs";
 import { BaseModal } from "src/app/core/services/modal.service";
 import { RummikubSettings } from "../rummikub.component";
 
@@ -9,11 +10,13 @@ import { RummikubSettings } from "../rummikub.component";
   templateUrl: "./settings-modal.component.html",
   styleUrls: ["./settings-modal.component.scss"],
 })
-export class SettingsModalComponent implements BaseModal<RummikubSettings> {
+export class SettingsModalComponent implements BaseModal<RummikubSettings>, OnInit {
   public readonly form = this.buildForm();
 
+  public sarcasmLabel?: Observable<string>;
+
   public set value(value: RummikubSettings) {
-    this.form.patchValue(value);
+    this.form.patchValue(value, { emitEvent: true, onlySelf: false });
   }
 
   public get value(): RummikubSettings {
@@ -29,11 +32,30 @@ export class SettingsModalComponent implements BaseModal<RummikubSettings> {
     private formBuilder: FormBuilder,
   ) { }
 
+  ngOnInit(): void {
+    this.sarcasmLabel = this.getSarcasmLabel();
+  }
+
   private buildForm(): FormGroup {
     return this.formBuilder.group({
       countdown: [60, []],
       speech: [true, []],
-      sarcasm: [false, []],
+      sarcasm: [0, []],
     });
+  }
+
+  private getSarcasmLabel(): Observable<string> {
+    const ctl = this.form.get("sarcasm")!;
+
+    return ctl.valueChanges.pipe(
+      startWith(ctl.value),
+      map((value: number) => {
+        if (value) {
+          return Math.round(100 * value) + " %";
+        }
+
+        return "Off";
+      }),
+    );
   }
 }

@@ -6,7 +6,7 @@
 <div class="modal-body">
   <form [formGroup]="form">
     <!-- Countdown -->
-    <div class="form-group">
+    <div class="form-group my-2">
       <label for="countdown">Countdown</label>
       <input type="number" class="form-control" id="countdown" formControlName="countdown" min="10" max="600" required
         placeholder="Countdown" aria-describedby="emailHelp">
@@ -14,15 +14,15 @@
     </div>
 
     <!-- Speech toggle -->
-    <div class="form-check form-switch">
+    <div class="form-check form-switch my-2">
       <input type="checkbox" class="form-check-input" id="speech" formControlName="speech">
       <label class="form-check-label" for="speech">Enable voice time prompts</label>
     </div>
 
-    <!-- Sarcasm toggle -->
-    <div class="form-check form-switch">
-      <input type="checkbox" class="form-check-input" id="sarcasm" formControlName="sarcasm">
-      <label class="form-check-label" for="sarcasm">Enable sarcastic comments</label>
+    <!-- Sarcasm slider -->
+    <div class="form-group my-2">
+      <label class="form-check-label" for="sarcasm">Sarcastic comments frequency ({{sarcasmLabel | async}})</label>
+      <input type="range" class="form-range" id="sarcasm" formControlName="sarcasm" min="0" max="1" step=".1">
     </div>
   </form>
 </div>
