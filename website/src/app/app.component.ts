@@ -1,8 +1,11 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Title } from "@angular/platform-browser";
 import { ActivatedRoute, Data, NavigationEnd, NavigationStart, Router } from "@angular/router";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
-import { filter, map, Observable, of, shareReplay, Subscription, tap } from "rxjs";
+import { filter, map, mergeMap, Observable, of, shareReplay, Subscription, tap } from "rxjs";
+import { environment } from "src/environments/environment";
+import { filterNonNullable } from "./core/rxjs/filters";
 import { Game, Games } from "./routes/games/games";
 
 const AppTitle = "Games";
@@ -12,7 +15,7 @@ const AppTitle = "Games";
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
 })
-export class AppComponent implements OnDestroy {
+export class AppComponent implements OnDestroy, OnInit {
   // ========================
   // Observables
   // ========================
@@ -38,11 +41,16 @@ export class AppComponent implements OnDestroy {
   // ========================
 
   constructor(
+    private auth: AngularFireAuth,
     private route: ActivatedRoute,
     private ngbModal: NgbModal,
     private router: Router,
     private titleService: Title,
   ) {
+  }
+
+  ngOnInit(): void {
+    this.subscriptions.push(this.ensureUser());
     this.subscriptions.push(this.getNavStartSubscription());
   }
 
@@ -53,6 +61,24 @@ export class AppComponent implements OnDestroy {
   // ========================
   // Methods
   // ========================
+
+  private ensureUser(): Subscription {
+    return this.auth.user.pipe(
+      mergeMap((user) => {
+        if (!user) {
+          return this.auth.signInAnonymously().then((x) => x.user);
+        } else {
+          return of(user);
+        }
+      }),
+      filterNonNullable(),
+      tap((user) => {
+        if (!environment.production) {
+          console.log(`Signed in as ${user.uid}`);
+        }
+      }),
+    ).subscribe();
+  }
 
   private getGameImage(): Observable<string | undefined> {
     return this.routeData$.pipe(
