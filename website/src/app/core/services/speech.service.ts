@@ -91,7 +91,7 @@ export class SpeechService implements OnDestroy {
   // Event handlers
   // ========================
 
-  private onVoicesChanged = () => {
+  private onVoicesChanged = (): void => {
     const voices = window.speechSynthesis.getVoices();
 
     this.voices$.next(voices);

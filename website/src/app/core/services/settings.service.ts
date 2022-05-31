@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
-import { map, Observable, startWith, switchMap, tap } from "rxjs";
+import { map, Observable, startWith, switchMap } from "rxjs";
 import { filterNonNullable } from "../rxjs/filters";
 
 @Injectable({
