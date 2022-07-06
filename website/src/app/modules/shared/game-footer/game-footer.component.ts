@@ -20,7 +20,7 @@ export class GameFooterComponent {
   @Output()
   public readonly itemClick = new EventEmitter<GameFooterItem>();
 
-  public onItemClick(item: GameFooterItem) : void {
+  public onItemClick(item: GameFooterItem): void {
     this.itemClick.next(item);
 
     if (item.onClick) {

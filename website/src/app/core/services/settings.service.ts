@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore, AngularFirestoreDocument } from "@angular/fire/compat/firestore";
+import { Collections } from "@models";
 import { map, Observable, startWith, switchMap } from "rxjs";
 import { filterNonNullable } from "../rxjs/filters";
 
@@ -30,9 +31,9 @@ export abstract class SettingsServiceBase<T> {
 
   private getSettingsRef(uid: string): AngularFirestoreDocument<T> {
     return this.db
-      .collection("users").doc(uid)
-      .collection<T>("settings").doc(this.gameName)
-      ;
+      .collection(Collections.Users).doc(uid)
+      .collection<T>(Collections.Settings).doc(this.gameName)
+
   }
 
   /** Saves the settings for the current user. */
