@@ -12,11 +12,15 @@ export abstract class SettingsServiceBase<T> {
   protected abstract readonly gameName: string;
 
   constructor(
-    private auth: AngularFireAuth,
-    private db: AngularFirestore,
+    protected auth: AngularFireAuth,
+    protected db: AngularFirestore,
   ) { }
 
   protected abstract getDefaultSettings(): T;
+
+  protected getGameRef(): AngularFirestoreDocument {
+    return this.db.collection(Collections.Games).doc(this.gameName);
+  }
 
   /** Gets the settings for the current user. */
   public getSettings(): Observable<T> {
