@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { RummikubComponent } from "./rummikub.component";
+import { TimerComponent } from "./timer.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: RummikubComponent,
+    component: TimerComponent,
   },
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class RummikubRoutingModule { }
+export class TimerRoutingModule { }

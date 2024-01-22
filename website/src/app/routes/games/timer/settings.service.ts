@@ -2,13 +2,13 @@ import { Injectable } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { AngularFirestore } from "@angular/fire/compat/firestore";
 import { SettingsServiceBase } from "src/app/core/services/settings.service";
-import { RummikubSettings } from "./rummikub.component";
+import { TimerSettings } from "./timer.component";
 
 @Injectable({
   providedIn: "root",
 })
-export class SettingsService extends SettingsServiceBase<RummikubSettings> {
-  protected readonly gameName = "rummikub";
+export class SettingsService extends SettingsServiceBase<TimerSettings> {
+  protected readonly gameName = "timer";
 
   constructor(
     auth: AngularFireAuth,
@@ -17,7 +17,7 @@ export class SettingsService extends SettingsServiceBase<RummikubSettings> {
     super(auth, db);
   }
 
-  protected getDefaultSettings(): RummikubSettings {
+  protected getDefaultSettings(): TimerSettings {
     return {
       countdown: 60,
       speech: true,

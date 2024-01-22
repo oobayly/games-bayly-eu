@@ -2,7 +2,7 @@ import { Type } from "@angular/core";
 import { Route } from "@angular/router";
 import { GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.component";
 import { MolkkyModule } from "./molkky/molkky.module";
-import { RummikubModule } from "./rummikub/rummikub.module";
+import { TimerModule } from "./timer/timer.module";
 
 export interface Game {
   name: string;
@@ -24,9 +24,9 @@ export const Games: Game[] = [
     type: MolkkyModule,
   },
   {
-    name: "Rummikub",
-    route: "rummikub",
-    type: RummikubModule,
+    name: "Timer",
+    route: "timer",
+    type: TimerModule,
   },
 ]
 

@@ -29,18 +29,18 @@ const ReadTimes: number[] = [30, SarcasmTime, 10, 3, 2, 1];
 /** The number of milliseconds between timer ticks. */
 const TimerInterval = 50;
 
-export interface RummikubSettings {
+export interface TimerSettings {
   speech: boolean;
   sarcasm: number;
   countdown: number;
 }
 
 @Component({
-  selector: "app-rummikub",
-  templateUrl: "./rummikub.component.html",
-  styleUrls: ["./rummikub.component.scss"],
+  selector: "app-timer",
+  templateUrl: "./timer.component.html",
+  styleUrls: ["./timer.component.scss"],
 })
-export class RummikubComponent implements GameComponent, OnDestroy {
+export class TimerComponent implements GameComponent, OnDestroy {
   // ========================
   // Properties
   // ========================
@@ -65,7 +65,7 @@ export class RummikubComponent implements GameComponent, OnDestroy {
   /** The amount of time remaining. */
   public readonly remaining$: Observable<number>;
 
-  private settings!: RummikubSettings;
+  private settings!: TimerSettings;
 
   /** The path that describes the timer arc. */
   public readonly svgPath$: Observable<string>;
@@ -226,7 +226,7 @@ export class RummikubComponent implements GameComponent, OnDestroy {
   }
 
   private async showSettingsModal(): Promise<boolean> {
-    const resp = await this.modal.showModal<SettingsModalComponent, RummikubSettings>({
+    const resp = await this.modal.showModal<SettingsModalComponent, TimerSettings>({
       type: SettingsModalComponent,
       callback: (instance) => {
         instance.value = this.settings;

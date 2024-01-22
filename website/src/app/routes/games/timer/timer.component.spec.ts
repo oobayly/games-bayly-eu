@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { RummikubComponent } from "./rummikub.component";
+import { TimerComponent } from "./timer.component";
 
-describe("RummikubComponent", () => {
-  let component: RummikubComponent;
-  let fixture: ComponentFixture<RummikubComponent>;
+describe("TimerComponent", () => {
+  let component: TimerComponent;
+  let fixture: ComponentFixture<TimerComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RummikubComponent ],
+      declarations: [TimerComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RummikubComponent);
+    fixture = TestBed.createComponent(TimerComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

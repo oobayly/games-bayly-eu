@@ -1,23 +1,23 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 
-import { RummikubRoutingModule } from "./rummikub-routing.module";
-import { RummikubComponent } from "./rummikub.component";
+import { TimerRoutingModule } from "./timer-routing.module";
+import { TimerComponent } from "./timer.component";
 import { SharedModule } from "src/app/modules/shared/shared.module";
 import { SettingsModalComponent } from "./settings-modal/settings-modal.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @NgModule({
   declarations: [
-    RummikubComponent,
+    TimerComponent,
     SettingsModalComponent,
   ],
   imports: [
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    RummikubRoutingModule,
+    TimerRoutingModule,
     SharedModule,
   ],
 })
-export class RummikubModule { }
+export class TimerModule { }
