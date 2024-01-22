@@ -1,9 +1,15 @@
 import { Component, OnInit } from "@angular/core";
-import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { map, Observable, startWith } from "rxjs";
 import { BaseModal } from "src/app/core/services/modal.service";
 import { TimerSettings } from "../timer.component";
+
+interface FormValues {
+  countdown: FormControl<number>;
+  speech: FormControl<boolean>;
+  sarcasm: FormControl<number>;
+}
 
 @Component({
   selector: "app-settings-modal",
@@ -29,23 +35,23 @@ export class SettingsModalComponent implements BaseModal<TimerSettings>, OnInit 
 
   constructor(
     public activeModal: NgbActiveModal,
-    private formBuilder: UntypedFormBuilder,
+    private formBuilder: FormBuilder,
   ) { }
 
   ngOnInit(): void {
     this.sarcasmLabel = this.getSarcasmLabel();
   }
 
-  private buildForm(): UntypedFormGroup {
+  private buildForm(): FormGroup<FormValues> {
     return this.formBuilder.group({
-      countdown: [60, []],
-      speech: [true, []],
-      sarcasm: [0, []],
+      countdown: this.formBuilder.control(60, { nonNullable: true }),
+      speech: this.formBuilder.control(true, { nonNullable: true }),
+      sarcasm: this.formBuilder.control(0, { nonNullable: true }),
     });
   }
 
   private getSarcasmLabel(): Observable<string> {
-    const ctl = this.form.get("sarcasm")!;
+    const ctl = this.form.controls.sarcasm;
 
     return ctl.valueChanges.pipe(
       startWith(ctl.value),
