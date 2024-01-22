@@ -7,6 +7,7 @@ import { GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.c
 import { GameComponent } from "../games";
 import { SettingsModalComponent } from "./settings-modal/settings-modal.component";
 import { SettingsService } from "./settings.service";
+import { WakeLockService } from "src/app/core/services/wake-lock.service";
 
 const SarcasmTime = 15;
 
@@ -82,16 +83,21 @@ export class TimerComponent implements GameComponent, OnDestroy {
     private modal: ModalService,
     private settingsService: SettingsService,
     private speech: SpeechService,
+    private wakeLock: WakeLockService,
   ) {
     this.subscriptions.push(this.getSettingsSubscription());
     this.remaining$ = this.getRemainingObservable();
     this.svgColor$ = this.getSvgColor();
     this.svgPath$ = this.getSvgPath();
+
+    this.wakeLock.requestLock();
   }
 
   ngOnDestroy(): void {
     this.destroyed$.next();
     this.subscriptions.forEach((s) => s.unsubscribe());
+
+    this.wakeLock.releaseLock();
   }
 
   // ========================
