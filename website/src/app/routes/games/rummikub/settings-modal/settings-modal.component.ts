@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup } from "@angular/forms";
+import { UntypedFormBuilder, UntypedFormGroup } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { map, Observable, startWith } from "rxjs";
 import { BaseModal } from "src/app/core/services/modal.service";
@@ -29,14 +29,14 @@ export class SettingsModalComponent implements BaseModal<RummikubSettings>, OnIn
 
   constructor(
     public activeModal: NgbActiveModal,
-    private formBuilder: FormBuilder,
+    private formBuilder: UntypedFormBuilder,
   ) { }
 
   ngOnInit(): void {
     this.sarcasmLabel = this.getSarcasmLabel();
   }
 
-  private buildForm(): FormGroup {
+  private buildForm(): UntypedFormGroup {
     return this.formBuilder.group({
       countdown: [60, []],
       speech: [true, []],

@@ -24,8 +24,8 @@
     },
     "files.eol": "\n",
     "files.insertFinalNewline": true,
-    "html.format.endWithNewline": true,
     "typescript.format.insertSpaceAfterFunctionKeywordForAnonymousFunctions": false,
-    "typescript.preferences.quoteStyle": "double"
+    "typescript.preferences.quoteStyle": "double",
+    "typescript.tsdk": "website/node_modules/typescript/lib"
   }
 }
