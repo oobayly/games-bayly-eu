@@ -2,7 +2,6 @@ import { NgModule } from "@angular/core";
 import { AngularFireModule } from "@angular/fire/compat";
 import { AngularFireAuthModule, USE_EMULATOR as USE_AUTH_EMULATOR } from "@angular/fire/compat/auth";
 import { USE_EMULATOR as USE_FIRESTORE_EMULATOR } from "@angular/fire/compat/firestore";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserModule } from "@angular/platform-browser";
 import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
@@ -18,8 +17,6 @@ import { firebaseConfig } from "src/environments/firebase-config";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
     NgbModule,
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,

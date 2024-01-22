@@ -3,6 +3,7 @@ import { CommonModule } from "@angular/common";
 
 import { GamesRoutingModule } from "./games-routing.module";
 import { IndexComponent } from "./index/index.component";
+import { ReactiveFormsModule } from "@angular/forms";
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { IndexComponent } from "./index/index.component";
   ],
   imports: [
     CommonModule,
+    ReactiveFormsModule,
     GamesRoutingModule,
   ],
 })
