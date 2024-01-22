@@ -1,7 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 /* Importing Bootstrap SCSS file. */
-@import "~bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons";
 
 .full-height {
@@ -20,12 +20,14 @@
 .fixed-ar {
   position: relative;
   overflow: hidden;
+
   &::before {
     content: "";
     display: block;
     padding-top: calc(100% / var(--aspect-ratio, 1));
   }
-  > * {
+
+  >* {
     position: absolute;
     top: 0;
     bottom: 0;
