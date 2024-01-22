@@ -14,13 +14,17 @@
         ],
         "createDefaultProgram": true
       },
+      "plugins": [
+        "@stylistic/ts"
+      ],
       "extends": [
+        "plugin:@typescript-eslint/recommended",
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/template/process-inline-templates"
       ],
       "rules": {
         "comma-dangle": "off",
-        "@typescript-eslint/comma-dangle": [
+        "@stylistic/ts/comma-dangle": [
           "warn",
           "always-multiline"
         ],

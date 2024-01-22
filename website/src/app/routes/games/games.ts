@@ -8,7 +8,7 @@ export interface Game {
   name: string;
   route: string;
   image?: string;
-  type: Type<any>;
+  type: Type<unknown>;
 }
 
 export interface GameComponent {

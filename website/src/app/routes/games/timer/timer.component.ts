@@ -248,7 +248,7 @@ export class TimerComponent implements GameComponent, OnDestroy {
     if (item.name === "Settings") {
       void this.showSettingsModal();
     }
-  };
+  }
 
   public onPauseClick(): void {
     const isEnabled = this.enabled$.value;
