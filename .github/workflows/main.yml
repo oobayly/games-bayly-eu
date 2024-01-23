@@ -1,0 +1,70 @@
+name: CI
+
+env:
+  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+  PROJECT_ID: games-bayly-eu
+  PROJECT_PATH: ./firebase
+
+on:
+  push:
+    branches:
+    - main
+    - beta
+
+jobs:
+  # Builds the webapp and creates the course-calculator-public artefact
+  build-webapp:
+    name: Build and publish WebApp
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.4.2
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3.4.1
+      with:
+        node-version: 20.x
+    - name: Install webapp packages
+      run: |
+        cd ./website
+        npm install
+    # - name: Replace beta assets
+    #   if: github.ref_name == 'beta'
+    #   run: |
+    #     cp -f website/src/assets/logo/logo-beta.svg website/src/assets/logo/logo.svg
+    - name: Build WebApp
+      run: |
+        cd ./website
+        npm run build:prod
+    - name: Publish live
+      if: github.ref_name == 'main'
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only hosting
+    - name: Publish beta
+      if: github.ref_name == 'beta'
+      uses: w9jds/firebase-action@master
+      with:
+        args: hosting:channel:deploy beta
+
+  # Deploy firebase functions, firestore and storage
+  # Only for main
+  deploy-firebase:
+    name: Build and deploy firebase functions
+    if: github.ref_name == 'main'
+
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.4.2
+    - name: Setup Node.js environment
+      uses: actions/setup-node@v3.4.1
+      with:
+        node-version: 20.x
+    - name: Install functions packages
+      run: |
+        cd ./firebase/functions
+        npm install
+    - name: Deploy to firebase hosting
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only functions,firestore,storage
