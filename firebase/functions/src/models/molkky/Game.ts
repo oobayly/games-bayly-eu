@@ -106,9 +106,8 @@ const calculateScore = (game: Game, player: GamePlayer, rounds?: number): number
 }
 
 const getPlayer = (game: Game, player: string | GamePlayer): GamePlayer => {
-  let id = typeof player === "string" ? player : player.id;
-
-  let found = game.players.find((x) => x.id === id);
+  const id = typeof player === "string" ? player : player.id;
+  const found = game.players.find((x) => x.id === id);
 
   if (!found) {
     throw new Error(`Couldn't find player with ID '${id}'`);

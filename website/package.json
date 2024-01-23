@@ -6,10 +6,11 @@
     "start": "ng serve --port 7700",
     "build": "ng build",
     "build:prod": "ng build --configuration production",
+    "postbuild:prod": "npm run firebase-copy-production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "firebase-copy-production": "shx rm -rf ../firebase/public/* && shx cp -r dist/website/* ../firebase/public/"
+    "firebase-copy-production": "shx mkdir -p ../firebase/public && shx rm -rf ../firebase/public/* && shx cp -r dist/website/* ../firebase/public/"
   },
   "private": true,
   "dependencies": {
