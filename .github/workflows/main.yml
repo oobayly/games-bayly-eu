@@ -8,7 +8,7 @@ env:
 on:
   push:
     branches:
-    - master
+    - main
     - beta
 
 jobs:
@@ -36,10 +36,10 @@ jobs:
         cd ./website
         npm run build:prod
     - name: Publish live
-      if: github.ref_name == 'master'
+      if: github.ref_name == 'main'
       uses: w9jds/firebase-action@master
       with:
-        args: deploy --only hosting:public,public-shorturl
+        args: deploy --only hosting:public
     - name: Publish beta
       if: github.ref_name == 'beta'
       uses: w9jds/firebase-action@master
@@ -47,10 +47,10 @@ jobs:
         args: hosting:channel:deploy beta --only public
 
   # Deploy firebase functions, firestore and storage
-  # Only for master
+  # Only for main
   deploy-firebase:
     name: Build and deploy firebase functions
-    if: github.ref_name == 'master'
+    if: github.ref_name == 'main'
 
     runs-on: ubuntu-latest
     steps:
