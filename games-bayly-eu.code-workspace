@@ -1,6 +1,9 @@
 {
   "folders": [
     {
+      "path": ".github"
+    },
+    {
       "name": "firebase",
       "path": "firebase"
     },
