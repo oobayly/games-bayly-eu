@@ -39,12 +39,12 @@ jobs:
       if: github.ref_name == 'main'
       uses: w9jds/firebase-action@master
       with:
-        args: deploy --only hosting:public
+        args: deploy --only hosting
     - name: Publish beta
       if: github.ref_name == 'beta'
       uses: w9jds/firebase-action@master
       with:
-        args: hosting:channel:deploy beta --only public
+        args: hosting:channel:deploy beta
 
   # Deploy firebase functions, firestore and storage
   # Only for main
