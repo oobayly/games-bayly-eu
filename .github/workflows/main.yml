@@ -67,4 +67,4 @@ jobs:
     - name: Deploy to firebase hosting
       uses: w9jds/firebase-action@master
       with:
-        args: deploy --only functions,firestore,storage
+        args: deploy --only firestore
