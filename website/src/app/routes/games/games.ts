@@ -1,6 +1,6 @@
 import { Type } from "@angular/core";
 import { Route } from "@angular/router";
-import { GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.component";
+import { GameFooterItem } from "src/app/modules/components/game-footer/game-footer.component";
 import { MolkkyModule } from "./molkky/molkky.module";
 import { TimerModule } from "./timer/timer.module";
 

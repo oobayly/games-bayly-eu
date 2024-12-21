@@ -3,13 +3,13 @@ import { BehaviorSubject, combineLatest, distinctUntilChanged, interval, map, Ob
 import { filterNonNullable } from "src/app/core/rxjs/filters";
 import { ModalService } from "src/app/core/services/modal.service";
 import { SpeechService } from "src/app/core/services/speech.service";
-import { GameFooterComponent, GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.component";
 import { GameComponent } from "../games";
 import { SettingsModalComponent } from "./settings-modal/settings-modal.component";
 import { SettingsService } from "./settings.service";
 import { WakeLockService } from "src/app/core/services/wake-lock.service";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
+import { GameFooterComponent, GameFooterItem } from "src/app/modules/components/game-footer/game-footer.component";
 
 const SarcasmTime = 15;
 

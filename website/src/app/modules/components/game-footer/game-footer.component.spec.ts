@@ -8,9 +8,9 @@ describe("GameFooterComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ GameFooterComponent ],
+      declarations: [GameFooterComponent],
     })
-    .compileComponents();
+      .compileComponents();
   });
 
   beforeEach(() => {
