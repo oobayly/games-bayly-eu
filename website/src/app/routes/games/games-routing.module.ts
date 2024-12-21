@@ -1,17 +1,17 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
 import { getGameRoutes } from "./games";
-import { IndexComponent } from "./index/index.component";
+import { IndexPageComponent } from "./pages/index-page/index-page.component";
 
 const routes: Routes = [
   {
     path: "",
-    component: IndexComponent,
+    component: IndexPageComponent,
     data: {
       title: "All Games",
     },
   },
-   ...getGameRoutes(),
+  ...getGameRoutes(),
 ];
 
 @NgModule({

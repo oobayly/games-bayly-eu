@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { PrivacyComponent } from "./privacy/privacy.component";
+import { PrivacyPageComponent } from "./pages/privacy-page/privacy-page.component";
 
 const routes: Routes = [
   {
     path: "privacy",
-    component: PrivacyComponent,
+    component: PrivacyPageComponent,
   },
 ];
 
