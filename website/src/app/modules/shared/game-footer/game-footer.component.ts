@@ -1,4 +1,6 @@
+import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { RouterModule } from "@angular/router";
 
 export interface GameFooterItem {
   name: string;
@@ -11,6 +13,8 @@ export interface GameFooterItem {
   selector: "app-game-footer",
   templateUrl: "./game-footer.component.html",
   styleUrls: ["./game-footer.component.scss"],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
 })
 export class GameFooterComponent {
   /** The list of footer items. */

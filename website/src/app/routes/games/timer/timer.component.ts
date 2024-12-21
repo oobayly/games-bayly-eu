@@ -3,11 +3,13 @@ import { BehaviorSubject, combineLatest, distinctUntilChanged, interval, map, Ob
 import { filterNonNullable } from "src/app/core/rxjs/filters";
 import { ModalService } from "src/app/core/services/modal.service";
 import { SpeechService } from "src/app/core/services/speech.service";
-import { GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.component";
+import { GameFooterComponent, GameFooterItem } from "src/app/modules/shared/game-footer/game-footer.component";
 import { GameComponent } from "../games";
 import { SettingsModalComponent } from "./settings-modal/settings-modal.component";
 import { SettingsService } from "./settings.service";
 import { WakeLockService } from "src/app/core/services/wake-lock.service";
+import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 
 const SarcasmTime = 15;
 
@@ -40,6 +42,11 @@ export interface TimerSettings {
   selector: "app-timer",
   templateUrl: "./timer.component.html",
   styleUrls: ["./timer.component.scss"],
+  standalone: true,
+  imports: [
+    CommonModule, RouterModule,
+    GameFooterComponent,
+  ],
 })
 export class TimerComponent implements GameComponent, OnDestroy {
   // ========================

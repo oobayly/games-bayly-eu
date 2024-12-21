@@ -4,6 +4,7 @@ import { Component } from "@angular/core";
   selector: "app-privacy",
   templateUrl: "./privacy.component.html",
   styleUrls: ["./privacy.component.scss"],
+  standalone: true,
 })
 export class PrivacyComponent {
 }

@@ -1,9 +1,11 @@
 import { Component, OnInit } from "@angular/core";
-import { FormBuilder, FormControl, FormGroup } from "@angular/forms";
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from "@angular/forms";
 import { NgbActiveModal } from "@ng-bootstrap/ng-bootstrap";
 import { map, Observable, startWith } from "rxjs";
 import { BaseModal } from "src/app/core/services/modal.service";
 import { TimerSettings } from "../timer.component";
+import { CommonModule } from "@angular/common";
+import { RouterModule } from "@angular/router";
 
 interface FormValues {
   countdown: FormControl<number>;
@@ -15,6 +17,8 @@ interface FormValues {
   selector: "app-settings-modal",
   templateUrl: "./settings-modal.component.html",
   styleUrls: ["./settings-modal.component.scss"],
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
 })
 export class SettingsModalComponent implements BaseModal<TimerSettings>, OnInit {
   public readonly form = this.buildForm();
