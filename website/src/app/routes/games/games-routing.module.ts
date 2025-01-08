@@ -11,7 +11,25 @@ const routes: Routes = [
       title: "All Games",
     },
   },
-  ...getGameRoutes(),
+  {
+    path: "molkky",
+    loadChildren: () => import("./molkky/molkky.module").then((m) => m.MolkkyModule),
+    data: {
+      game: {
+        name: "Mölkky",
+      },
+    },
+  },
+  {
+    path: "timer",
+    loadChildren: () => import("./timer/timer.module").then((m) => m.TimerModule),
+    data: {
+      game: {
+        name: "Timer",
+      },
+    },
+  },
+  //...getGameRoutes(),
 ];
 
 @NgModule({
