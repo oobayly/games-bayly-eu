@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { AngularFireAuth } from "@angular/fire/compat/auth";
 import { Title } from "@angular/platform-browser";
-import { ActivatedRoute, Data, NavigationEnd, NavigationStart, Router } from "@angular/router";
-import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { ActivatedRoute, Data, NavigationEnd, NavigationStart, Router, RouterModule } from "@angular/router";
+import { NgbModal, NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { filter, map, mergeMap, Observable, of, shareReplay, Subscription, tap } from "rxjs";
 import { environment } from "src/environments/environment";
 import { filterNonNullable } from "./core/rxjs/filters";
 import { Game, Games } from "./routes/games/games";
+import { CommonModule } from "@angular/common";
 
 const AppTitle = "Games";
 
@@ -14,7 +15,11 @@ const AppTitle = "Games";
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
-  standalone: false,
+  standalone: true,
+  imports: [
+    CommonModule, RouterModule,
+    NgbModule,
+  ],
 })
 export class AppComponent implements OnDestroy, OnInit {
   // ========================
